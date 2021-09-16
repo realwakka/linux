@@ -415,7 +415,7 @@ static void vc4_atomic_commit_tail(struct drm_atomic_state *state)
 	vc4_ctm_commit(vc4, state);
 
 	if (!vc4->firmware_kms) {
-		if (vc4->hvs->hvs5)
+		if (vc4->hvs && vc4->hvs->hvs5)
 			vc5_hvs_pv_muxing_commit(vc4, state);
 		else
 			vc4_hvs_pv_muxing_commit(vc4, state);

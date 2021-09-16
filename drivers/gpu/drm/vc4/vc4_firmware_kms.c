@@ -660,15 +660,16 @@ static int vc4_plane_to_mb(struct drm_plane *plane,
 }
 
 static int vc4_plane_atomic_check(struct drm_plane *plane,
-				  struct drm_atomic_state *old_state)
+				  struct drm_atomic_state *state)
 {
-	struct drm_plane_state *state = plane->state;
+	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
+										 plane);
 	struct vc4_fkms_plane *vc4_plane = to_vc4_fkms_plane(plane);
 
-	if (!plane_enabled(state))
+	if (!plane_enabled(new_plane_state))
 		return 0;
 
-	return vc4_plane_to_mb(plane, &vc4_plane->mb, state);
+	return vc4_plane_to_mb(plane, &vc4_plane->mb, new_plane_state);
 }
 
 /* Called during init to allocate the plane's atomic state. */
